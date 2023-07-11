@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render
 
 items = [
     {"id": 1, "name": "Кроссовки abibas", "quantity": 5},
@@ -10,42 +11,39 @@ items = [
 
 
 def home(request):
-    text = """<h1>"Изучаем django"</h1> 
-    <strong>Автор</strong>: <i>Чередниченко Е.Г.</i>"""
-
-    return HttpResponse(text)
+    context = {
+        'name': 'Ivan',
+        'email': 'ivan@mail.ru'
+    }
+    return render(request, 'index.html', context)
 
 
 def about(request):
-    text = """<text>Имя: Иван<br>
-    Отчество: Петрович<br>
-    Фамилия: Иванов<br>
-    телефон: 8-923-600-01-02<br>
-    email: vasya@mail.ru</text>"""
+    context = {
+        'name': 'Ivan',
+        'surname': 'Ivanov',
+        'patronymic': 'Petrovich',
+        'phone': '8-923-600-01-02',
+        'email': 'vasya@mail.ru'
+    }
 
-    return HttpResponse(text)
+    return render(request, 'about.html', context)
 
 
 def item(request, item_id):
     for item_ in items:
         if item_['id'] == item_id:
-            text = f"<text>Товар {item_['name']} найден в количестве {item_['quantity']}<text>"
-            text += "<p><a href='/items/'>Назад к списку товаров</a></p>"
+            context = {
+                'item': item_
+            }
 
-            return HttpResponse(text)
+            return render(request, 'item-page.html', context)
 
     return HttpResponseNotFound(f"<text>Товар с id = {item_id} не найден</text>")
 
 
 def items_list(request):
-    text = """<body>
-      <p><strong>Список товаров:</strong></p>
-      <ol>"""
-
-    for item_ in items:
-        text += f"<li><a href='/item/{item_['id']}/'>{item_['name']} </a></li>"
-
-    text += """</ol>
-     </body>"""
-
-    return HttpResponse(text)
+    context = {
+        'items': items
+    }
+    return render(request, 'items-list.html', context)
