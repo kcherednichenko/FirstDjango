@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 
 items = [
     {"id": 1, "name": "Кроссовки abibas", "quantity": 5},
@@ -27,16 +27,14 @@ def about(request):
 
 
 def item(request, item_id):
-    text = f"<text>Товар с id = {item_id} не найден</text>"
-
     for item_ in items:
-        if item_id in item_.values():
+        if item_['id'] == item_id:
             text = f"<text>Товар {item_['name']} найден в количестве {item_['quantity']}<text>"
-            break
+            text += "<p><a href='http://localhost:8000/items/'>Назад к списку товаров</a></p>"
 
-    text += "<p><a href='http://localhost:8000/items/'>Назад к списку товаров</a></p>"
+            return HttpResponse(text)
 
-    return HttpResponse(text)
+    return HttpResponseNotFound(f"<text>Товар с id = {item_id} не найден</text>")
 
 
 def items_list(request):
