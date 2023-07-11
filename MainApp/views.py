@@ -30,7 +30,7 @@ def item(request, item_id):
     for item_ in items:
         if item_['id'] == item_id:
             text = f"<text>Товар {item_['name']} найден в количестве {item_['quantity']}<text>"
-            text += "<p><a href='http://localhost:8000/items/'>Назад к списку товаров</a></p>"
+            text += "<p><a href='/items/'>Назад к списку товаров</a></p>"
 
             return HttpResponse(text)
 
@@ -39,14 +39,13 @@ def item(request, item_id):
 
 def items_list(request):
     text = """<body>
-  <p><strong>Список товаров:</strong></p>
-  <ol>
-    <li>Кроссовки abibas</li>
-    <li>Куртка кожаная</li>
-    <li>Coca-cola 1 литр</li>
-    <li>Картофель фри</li>
-    <li>Кепка</li>
-  </ol>
- </body>"""
+      <p><strong>Список товаров:</strong></p>
+      <ol>"""
+
+    for item_ in items:
+        text += f"<li><a href='/item/{item_['id']}/'>{item_['name']} </a></li>"
+
+    text += """</ol>
+     </body>"""
 
     return HttpResponse(text)
