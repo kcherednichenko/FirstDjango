@@ -1,19 +1,28 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        li{
+            display: inline-block;
+            border: 1px solid blue;
+            padding: 10px 20px;
+        }
+        a{
+            text-decoration: none;
+            color: cornflowerblue;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
     <h2>List of products</h2>
-    <div class="div"> <p><a href='/'>Home / </a> <a href='/items/'> Items</a></p> </div>
     <ol>
         {% for item in items %}
-            <li><a href='/item/{{ item.id }}/'> {{ item.name }} </a></li>
+            <li>
+                <a href="{%  url 'item-detail' item.id %}"> {{ item.name }} </a>
+                <p>{{ item.description }}</p>
+            </li>
         {% endfor %}
     </ol>
-</body>
-</html>
+{% endblock %}
