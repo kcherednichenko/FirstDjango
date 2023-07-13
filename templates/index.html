@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
+    <img width="50px" src="{% static 'django.svg' %}" alt="Django image">
     <h1>Welcome</h1>
     <p>My name is <i>{{ name }}</i> </p>
     <p>My email is {{ email }}</p>
     <p><a href="{% url 'items-list' %}">Back to items list</a></p>
 {% endblock %}
-

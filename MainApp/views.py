@@ -30,8 +30,13 @@ def item(request, item_id):
     except ObjectDoesNotExist:
         return HttpResponseNotFound(f"<text>Товар с id = {item_id} не найден</text>")
     else:
+        item_colours = []
+        for colour in item_.colours.all():
+            item_colours.append(colour.name)
+
         context = {
-            'item': item_
+            'item': item_,
+            'colours': item_colours
         }
 
         return render(request, 'item-page.html', context)

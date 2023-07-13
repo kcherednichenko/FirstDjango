@@ -9,5 +9,16 @@
     {% else %}
         <p>Amount: {{ item.count }}</p>
     {% endif %}
+
+    {% if colours %}
+        <p>Item colours:</p>
+        <ul>
+            {% for colour in colours %}
+                <li style="color: {{ colour }}"> {{ colour }} </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No info about colours</p>
+    {% endif %}
     <p><a href="{% url 'items-list' %}">Back to items list</a></p>
 {% endblock %}
