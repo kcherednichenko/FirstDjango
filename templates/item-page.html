@@ -9,12 +9,13 @@
 </head>
 <body>
     <h2>Information about product</h2>
-    <p>{{ item.name }}</p>
-    {% if item.quantity == 0 %}
+    <p>Name: {{ item.name }}</p>
+    <p>Brand: {{ item.brand }}</p>
+    {% if item.count == 0 %}
         <p>Product is out of stock</p>
     {% else %}
-        <p>Amount: {{ item.quantity }}</p>
+        <p>Amount: {{ item.count }}</p>
     {% endif %}
-    <p><a href='/items/'>Назад к списку товаров</a></p>
+    <p><a href='/items/'>Back to items list</a></p>
 </body>
 </html>

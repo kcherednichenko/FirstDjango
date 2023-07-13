@@ -1,13 +1,7 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
-
-items = [
-    {"id": 1, "name": "Кроссовки abibas", "quantity": 5},
-    {"id": 2, "name": "Куртка кожаная", "quantity": 2},
-    {"id": 5, "name": "Coca-cola 1 литр", "quantity": 12},
-    {"id": 7, "name": "Картофель фри", "quantity": 0},
-    {"id": 8, "name": "Кепка", "quantity": 124},
-]
+from MainApp.models import Item
 
 
 def home(request):
@@ -31,18 +25,21 @@ def about(request):
 
 
 def item(request, item_id):
-    for item_ in items:
-        if item_['id'] == item_id:
-            context = {
-                'item': item_
-            }
+    try:
+        item_ = Item.objects.get(id=item_id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f"<text>Товар с id = {item_id} не найден</text>")
+    else:
+        context = {
+            'item': item_
+        }
 
-            return render(request, 'item-page.html', context)
-
-    return HttpResponseNotFound(f"<text>Товар с id = {item_id} не найден</text>")
+        return render(request, 'item-page.html', context)
 
 
 def items_list(request):
+    items = Item.objects.all()
+
     context = {
         'items': items
     }
